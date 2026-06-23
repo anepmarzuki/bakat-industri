@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metalife — Energy Prism</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f5f2;
+    --surface: #ffffff;
+    --surface2: #efeeea;
+    --border: rgba(20,20,18,0.10);
+    --gold: #8a6d2f;
+    --gold2: #a9844a;
+    --gold-dim: rgba(138,109,47,0.10);
+    --text: #1c1b18;
+    --text-dim: #6b6862;
+    --besi: #7c5cd6;
+    --air: #2b78c4;
+    --api: #c4432e;
+    --kayu: #2f9152;
+    --tanah: #b9941f;
+    --besi-dim: rgba(124,92,214,0.08);
+    --air-dim: rgba(43,120,196,0.08);
+    --api-dim: rgba(196,67,46,0.08);
+    --kayu-dim: rgba(47,145,82,0.08);
+    --tanah-dim: rgba(185,148,31,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* Subtle paper-grain corporate backdrop */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 15% 0%, rgba(138,109,47,0.05) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 90% 100%, rgba(28,27,24,0.04) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Hairline grid texture, corporate not cosmic */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(20,20,18,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(20,20,18,0.025) 1px, transparent 1px);
+    background-size: 64px 64px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  main { position: relative; z-index: 1; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 24px;
+    position: relative;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 6px 18px;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 40px;
+    background: var(--gold-dim);
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(42px, 8vw, 88px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .hero h1 span {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 50%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: clamp(16px, 2.5vw, 22px);
+    color: var(--text-dim);
+    font-style: italic;
+    margin-bottom: 48px;
+    max-width: 520px;
+  }
+
+  .prism-svg {
+    margin: 0 auto 48px;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%);
+    color: #0a0a0f;
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    padding: 16px 40px;
+    border-radius: 100px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 3px rgba(28,27,24,0.08), 0 4px 14px rgba(138,109,47,0.12);
+  }
+
+  .hero-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 6px rgba(28,27,24,0.10), 0 8px 22px rgba(138,109,47,0.18);
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 0 40px;
+    margin: 40px 0;
+  }
+
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border), transparent);
+  }
+
+  .divider-icon {
+    width: 32px; height: 32px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    font-size: 14px;
+  }
+
+  /* ── CALCULATOR SECTION ── */
+  .calc-section {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 60px 24px 100px;
+  }
+
+  .section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(24px, 4vw, 40px);
+    font-weight: 600;
+    text-align: center;
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .section-desc {
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 16px;
+    margin-bottom: 48px;
+    font-style: italic;
+  }
+
+  /* ── FORM CARD ── */
+  .form-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .form-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 560px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .form-card { padding: 24px; }
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .form-group label {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .form-group input, .form-group select {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    color: var(--text);
+    font-family: 'Crimson Pro', serif;
+    font-size: 18px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -webkit-appearance: none;
+  }
+
+  .form-group input:focus, .form-group select:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(138,109,47,0.12);
+  }
+
+  .form-group input::placeholder { color: var(--text-dim); font-style: italic; }
+
+  .form-group select option { background: var(--surface); color: var(--text); }
+
+  .checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    grid-column: 1 / -1;
+    user-select: none;
+  }
+
+  .checkbox-row:hover { border-color: rgba(138,109,47,0.35); }
+
+  .checkbox-row input[type=checkbox] { display: none; }
+
+  .custom-check {
+    width: 20px; height: 20px;
+    border: 1.5px solid var(--border);
+    border-radius: 5px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .checkbox-row input:checked ~ .custom-check {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+
+  .custom-check::after {
+    content: '✓';
+    font-size: 12px;
+    color: #0a0a0f;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+
+  .checkbox-row input:checked ~ .custom-check::after { opacity: 1; }
+
+  .checkbox-label {
+    font-size: 15px;
+    color: var(--text-dim);
+    line-height: 1.4;
+  }
+
+  .checkbox-label strong { color: var(--text); }
+
+  .btn-kira {
+    width: 100%;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%);
+    color: #0a0a0f;
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+    padding: 18px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 1px 3px rgba(28,27,24,0.08), 0 3px 10px rgba(138,109,47,0.10);
+    margin-top: 8px;
+  }
+
+  .btn-kira:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(28,27,24,0.10), 0 6px 16px rgba(138,109,47,0.16);
+  }
+
+  .btn-kira:active { transform: translateY(0); }
+
+  /* ── PRISM DIAGRAM (mini) ── */
+  .prism-display {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .prism-label {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  /* ── RESULTS ── */
+  #results {
+    display: none;
+    margin-top: 40px;
+  }
+
+  #results.visible { display: block; }
+
+  .results-header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .results-header h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+
+  .results-header p {
+    color: var(--text-dim);
+    font-size: 15px;
+    font-style: italic;
+  }
+
+  /* Prism node codes */
+  .prisma-visual {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ── ELEMENT CARDS ── */
+  .element-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 500px) {
+    .element-grid { grid-template-columns: 1fr; }
+  }
+
+  .element-card {
+    border-radius: 14px;
+    padding: 20px;
+    border: 1px solid;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s;
+  }
+
+  .element-card:hover { transform: translateY(-2px); }
+
+  .element-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.06;
+  }
+
+  .card-besi { border-color: rgba(167,139,250,0.3); background: var(--besi-dim); }
+  .card-air  { border-color: rgba(96,165,250,0.3);  background: var(--air-dim);  }
+  .card-api  { border-color: rgba(248,113,113,0.3); background: var(--api-dim);  }
+  .card-kayu { border-color: rgba(74,222,128,0.3);  background: var(--kayu-dim); }
+  .card-tanah{ border-color: rgba(245,208,0,0.3);  background: var(--tanah-dim);}
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .card-name {
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .card-besi .card-name { color: var(--besi); }
+  .card-air  .card-name { color: var(--air);  }
+  .card-api  .card-name { color: var(--api);  }
+  .card-kayu .card-name { color: var(--kayu); }
+  .card-tanah .card-name{ color: var(--tanah);}
+
+  .card-level {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    padding: 4px 10px;
+    border-radius: 100px;
+    border: 1px solid;
+  }
+
+  .level-tinggi  { color: #f87171; border-color: rgba(248,113,113,0.4); background: rgba(248,113,113,0.1); }
+  .level-dinamik { color: #f5d000; border-color: rgba(245,208,0,0.4);  background: rgba(245,208,0,0.1);  }
+  .level-ok      { color: #4ade80; border-color: rgba(74,222,128,0.4);  background: rgba(74,222,128,0.1);  }
+  .level-lemah   { color: #94a3b8; border-color: rgba(148,163,184,0.3); background: rgba(148,163,184,0.08);}
+
+  .card-emosi {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+    font-style: italic;
+  }
+
+  .card-desc {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .card-highlight {
+    margin-top: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: rgba(0,0,0,0.3);
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .card-highlight strong { color: var(--gold); }
+
+  /* Highlight elemen utama */
+  .element-card.is-dominant {
+    box-shadow: 0 0 30px -5px currentColor;
+  }
+  .card-besi.is-dominant { box-shadow: 0 0 30px -5px var(--besi); }
+  .card-air.is-dominant  { box-shadow: 0 0 30px -5px var(--air);  }
+  .card-api.is-dominant  { box-shadow: 0 0 30px -5px var(--api);  }
+  .card-kayu.is-dominant { box-shadow: 0 0 30px -5px var(--kayu); }
+  .card-tanah.is-dominant{ box-shadow: 0 0 30px -5px var(--tanah);}
+
+  /* Dominant summary */
+  .dominant-summary {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .dominant-summary .dom-label {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .dominant-summary .dom-name {
+    font-family: 'Cinzel', serif;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .dominant-summary .dom-desc {
+    font-size: 15px;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+
+  /* kod grid display */
+  .kod-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    width: 100%;
+    max-width: 360px;
+    margin-bottom: 20px;
+  }
+
+  .kod-cell {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 6px;
+    text-align: center;
+  }
+
+  .kod-cell-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+  }
+
+  .kod-cell-val {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1.2;
+  }
+
+  /* prisma triangle SVG labels */
+  .node-val {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 600;
+    fill: var(--text);
+  }
+
+  .node-label {
+    font-size: 10px;
+    fill: var(--text-dim);
+    font-family: 'Crimson Pro', serif;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 40px 24px;
+    border-top: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+
+  footer a { color: var(--gold); text-decoration: none; }
+
+  /* Error */
+  .error-msg {
+    color: var(--api);
+    font-size: 14px;
+    text-align: center;
+    padding: 12px;
+    background: rgba(248,113,113,0.08);
+    border: 1px solid rgba(248,113,113,0.2);
+    border-radius: 10px;
+    margin-top: 12px;
+    display: none;
+  }
+
+  .error-msg.show { display: block; }
+
+  /* reset btn */
+  .btn-reset {
+    display: block;
+    margin: 20px auto 0;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    padding: 10px 24px;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-reset:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    animation: revealUp 0.6s forwards;
+  }
+
+  @keyframes revealUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.35s; }
+  .delay-4 { animation-delay: 0.5s; }
+
+  /* ── RESULT TABLE ── */
+  /* ── QUADRANT CHART ── */
+  .quadrant-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 28px 20px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .quadrant-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .quadrant-title {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    text-align: center;
+    margin-bottom: 22px;
+  }
+
+  .quadrant-svg-wrap {
+    display: flex;
+    justify-content: center;
+  }
+
+  .talent-result {
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+  }
+
+  .talent-result.industri-only {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+  }
+
+  .talent-result .talent-item {
+    text-align: center;
+    margin-bottom: 12px;
+  }
+
+  .talent-result .talent-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .talent-result .talent-rank {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+  }
+
+  .talent-result .talent-name {
+    font-family: 'Cinzel', serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--gold2);
+  }
+</style>
+</head>
+<body>
+<main>
+
+
+  <!-- CALCULATOR -->
+  <section class="calc-section" id="kira">
+    <p class="section-label reveal" onclick="handleLogoTap()" style="cursor:default;user-select:none;">Langkah Pertama</p>
+    <h2 class="section-title reveal delay-1">Masukkan Maklumat Kelahiran</h2>
+
+
+    <div class="form-card reveal delay-3">
+
+
+      <!-- Form -->
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Tarikh Lahir (Hari)</label>
+          <input type="number" id="inp-hari" placeholder="cth. 15" min="1" max="31"/>
+        </div>
+        <div class="form-group">
+          <label>Bulan Lahir</label>
+          <select id="inp-bulan">
+            <option value="">Pilih bulan...</option>
+            <option value="1">Januari (1)</option>
+            <option value="2">Februari (2)</option>
+            <option value="3">Mac (3)</option>
+            <option value="4">April (4)</option>
+            <option value="5">Mei (5)</option>
+            <option value="6">Jun (6)</option>
+            <option value="7">Julai (7)</option>
+            <option value="8">Ogos (8)</option>
+            <option value="9">September (9)</option>
+            <option value="10">Oktober (10)</option>
+            <option value="11">November (11)</option>
+            <option value="12">Disember (12)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Tahun Lahir (4 digit)</label>
+          <input type="number" id="inp-tahun" placeholder="cth. 1990" min="1900" max="2025"/>
+        </div>
+        <div class="form-group">
+          <label>Masa Lahir</label>
+          <input type="time" id="inp-masa" placeholder="00:00"/>
+        </div>
+        <label class="checkbox-row" style="grid-column:1/-1">
+          <input type="checkbox" id="cbx-subuh"/>
+          <span class="custom-check"></span>
+          <span class="checkbox-label">
+            <strong>Lahir antara 12:00 tengah malam dan sebelum Subuh?</strong><br>
+            Jika ya, tarikh hari sebelumnya akan digunakan untuk pengiraan tenaga
+          </span>
+        </label>
+      </div>
+
+      <div id="error-msg" class="error-msg">Sila isi semua maklumat dengan betul.</div>
+
+      <button class="btn-kira" id="btn-kira" onclick="kiraPrisma()">✦ Tunjukkan Profiling Bakat dan Industri</button>
+      <div id="usage-info" style="text-align:center;margin-top:12px;font-size:14px;font-family:'Cinzel',serif;letter-spacing:0.08em;"></div>
+
+      <!-- RESULTS -->
+      <div id="results">
+        <div style="height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:40px 0;"></div>
+
+        <!-- Quadrant Emotion Chart + Bakat -->
+        <div class="quadrant-card">
+          <div class="quadrant-title">Profiling Bakat</div>
+          <div class="quadrant-svg-wrap" id="quadrant-svg-wrap"></div>
+          <div class="talent-result" id="bakat-result"></div>
+        </div>
+
+        <!-- Industri -->
+        <div class="quadrant-card">
+          <div class="quadrant-title">Industri yang Sesuai</div>
+          <div class="talent-result industri-only" id="industri-result"></div>
+        </div>
+
+        <button class="btn-reset" onclick="resetForm()">↺ Kira Semula</button>
+      </div>
+    </div>
+
+
+  </section>
+</main>
+
+<!-- RESET OVERLAY -->
+<div id="reset-overlay" style="display:none;position:fixed;inset:0;background:rgba(20,19,16,0.55);z-index:999;align-items:center;justify-content:center;">
+  <div style="background:#ffffff;border:1px solid rgba(138,109,47,0.25);border-radius:16px;padding:32px;width:90%;max-width:360px;text-align:center;box-shadow:0 12px 40px rgba(28,27,24,0.18);">
+    <p style="font-family:'Cinzel',serif;font-size:13px;letter-spacing:0.15em;color:var(--gold);margin-bottom:16px;">KOD RESET</p>
+    <input id="reset-pwd-input" type="password" placeholder="Masukkan kod..." onkeydown="if(event.key==='Enter')submitResetPwd()" style="width:100%;background:#efeeea;border:1px solid rgba(20,20,18,0.12);border-radius:8px;padding:12px 16px;color:#1c1b18;font-size:16px;outline:none;margin-bottom:8px;"/>
+    <p id="reset-msg" style="color:#c4432e;font-size:13px;min-height:20px;margin-bottom:12px;"></p>
+    <div style="display:flex;gap:10px;">
+      <button onclick="closeResetOverlay()" style="flex:1;background:transparent;border:1px solid rgba(20,20,18,0.15);color:#6b6862;font-family:'Cinzel',serif;font-size:12px;padding:10px;border-radius:8px;cursor:pointer;">Batal</button>
+      <button onclick="submitResetPwd()" style="flex:1;background:linear-gradient(135deg,#8a6d2f,#a9844a);color:#ffffff;font-family:'Cinzel',serif;font-size:12px;font-weight:700;padding:10px;border-radius:8px;border:none;cursor:pointer;">Reset</button>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+// ── DATA ──
+const elemenInfo = {
+  1:{name:'BESI',color:'besi',emosi:'Thought',icon:'🧠'},
+  6:{name:'BESI',color:'besi',emosi:'Thought',icon:'🧠'},
+  2:{name:'AIR', color:'air', emosi:'Love',icon:'💙'},
+  7:{name:'AIR', color:'air', emosi:'Love',icon:'💙'},
+  3:{name:'API', color:'api', emosi:'Feeling',icon:'🔥'},
+  8:{name:'API', color:'api', emosi:'Feeling',icon:'🔥'},
+  4:{name:'KAYU',color:'kayu',emosi:'Action',icon:'🌿'},
+  9:{name:'KAYU',color:'kayu',emosi:'Action',icon:'🌿'},
+  5:{name:'TANAH',color:'tanah',emosi:'Confidence',icon:'🏔'},
+};
+
+const elemenDetail = {
+  BESI:{
+    emosi:'Thought',
+    positif:'Leader, rational, logical, innovative, responsible, motivated, wise.',
+    lemah:'Does not seek self-improvement, lacks foresight, no clear goals.',
+    tinggi:'Stubborn, over-thinking, judgemental, ignores others opinions.',
+    atasi_lemah:'Prioritise goals and direction. Develop self-leadership qualities.',
+    atasi_tinggi:'Do not be too rigid. Do not feel you are always right. Cultivate calmness and gentleness.',
+    outer_tinggi:'When socially/environmentally provoked: easily offended, stubborn, headstrong with own opinions.',
+    outer_lemah:'Struggles to respond rationally to external challenges. Poor thinking ability under pressure.',
+    outer_atasi:'Train yourself to think before reacting. Do not let external provocation control your thinking.',
+  },
+  AIR:{
+    emosi:'Love',
+    positif:'Widely liked, loves helping others, networking, socialising, caring, communicative.',
+    lemah:'Avoids socialising, prefers solitude, lacks empathy toward others.',
+    tinggi:'Manipulative, quick to hate, political, negatively influences others.',
+    atasi_lemah:'Make friends and interact well. Join communities or groups.',
+    atasi_tinggi:'Reduce manipulation. Care about others too. Important: love and togetherness values.',
+    outer_tinggi:'Easily influenced by others emotions. Quick to extreme hate or affection when socially triggered.',
+    outer_lemah:'Insensitive to the feelings of those around. Struggles to read social situations.',
+    outer_atasi:'Be aware of who you associate with. Environment greatly affects your love emotions.',
+  },
+  API:{
+    emosi:'Feeling',
+    positif:'Hardworking, active, sensitive, intuitive, strategic, opportunistic, spirited.',
+    lemah:'Slow to act, lack of commitment, easily influenced, passive.',
+    tinggi:'Easily angered, aggressive, wasteful, chaotic, takes shortcuts, disorganised.',
+    atasi_lemah:'Act quickly. Be active. People will more easily accept your input.',
+    atasi_tinggi:'Manage feelings. Do not entertain others anger. Use gentleness and care for them.',
+    outer_tinggi:'Easily provoked and angered when triggered by social or environmental factors.',
+    outer_lemah:'Lacks spontaneous response. Easily follows environmental currents without resolve.',
+    outer_atasi:'Avoid environments that trigger anger. Choose social settings that bring calm and positive energy.',
+  },
+  KAYU:{
+    emosi:'Action',
+    positif:'Intelligent, orderly, follows systems, detailed, planner, organiser, pragmatic.',
+    lemah:'Afraid to act, does not know how, learns only what interests them.',
+    tinggi:'Know-it-all attitude, rigidly follows procedures, perfectionism, plans but does not execute.',
+    atasi_lemah:'Prioritise personal and family safety. Learn new creative methods.',
+    atasi_tinggi:'Do not just plan. Need a team to execute. Reduce the know-it-all attitude.',
+    outer_tinggi:'When facing external pressure, becomes too rigid, perfectionist, or acts like they know everything.',
+    outer_lemah:'When facing new situations or external challenges, quickly becomes stuck and unsure how to act.',
+    outer_atasi:'Build a flexible action system. Learn from experience, not just from books or plans.',
+  },
+  TANAH:{
+    emosi:'Confidence',
+    positif:'Assertive, self-confident, leads, persistent, high ambitions, powerful, in control.',
+    lemah:'Lacks assertiveness, low confidence, easily pushed around, no firm principles.',
+    tinggi:'Stubborn, egotistical, arrogant, self-aggrandising, bossy, oppressive, cannot stand being challenged.',
+    atasi_lemah:'Develop assertiveness and personal principles. Find status in life.',
+    atasi_tinggi:'Appreciate others. Reduce ego. Show compassion to those around. Do not show off.',
+    outer_tinggi:'When challenged by others or environment — cannot stand losing, ego rises, likes to show power.',
+    outer_lemah:'Easily submits to social pressure. No firm stance when facing others.',
+    outer_atasi:'Build confidence through knowledge and experience. Do not let others views determine your self-worth.',
+  },
+};
+
+// ── NAMA WARNA ELEMEN ──
+const namaWarna = {
+  BESI: 'Purple',
+  AIR:  'Blue',
+  API:  'Red',
+  KAYU: 'Green',
+  TANAH:'Yellow',
+};
+
+// ── SUPABASE REMOVED ──
+
+// ── BOOK CODE ──
+let _bookCode = null;
+let _bookData = null;
+
+
+async function initBookCode() {
+  updateUsageDisplay();
+}
+
+function disableForm() {
+  const btn = document.getElementById('btn-kira');
+  if (btn) btn.disabled = true;
+}
+
+// ── USAGE LIMIT ──
+const LIMIT_KEY = 'metalife_usage_count';
+const MAX_USAGE = 3;
+
+function getUsageCount() {
+  return 0;
+}
+
+function getMaxUsage() {
+  return Infinity;
+}
+
+async function incrementUsage() {
+  // No limit — usage tracking removed
+}
+
+function showUsageError(msg) {
+  const el = document.getElementById('usage-info');
+  if (el) el.innerHTML = `<span style="color:var(--api)">⚠ ${msg}</span>`;
+}
+
+function updateUsageDisplay() {
+  const used = getUsageCount();
+  const max = getMaxUsage();
+  const remaining = Math.max(0, max - used);
+  const el = document.getElementById('usage-info');
+  if (el) {
+    if (remaining === 0) {
+      el.innerHTML = `<span style="color:var(--api)">⚠ Anda telah mencapai had ${max} carian.</span>`;
+    } else {
+      el.innerHTML = `<span style="color:var(--text-dim)">Baki carian: <strong style="color:var(--gold)">${remaining}</strong> / ${max}</span>`;
+    }
+  }
+}
+
+// ── HIDDEN RESET ──
+let _tapCount = 0, _tapTimer = null;
+function handleLogoTap() {
+  _tapCount++;
+  clearTimeout(_tapTimer);
+  _tapTimer = setTimeout(() => { _tapCount = 0; }, 2000);
+  if (_tapCount >= 5) {
+    _tapCount = 0;
+    document.getElementById('reset-overlay').style.display = 'flex';
+    document.getElementById('reset-pwd-input').value = '';
+    document.getElementById('reset-msg').textContent = '';
+    document.getElementById('reset-pwd-input').focus();
+  }
+}
+
+async function submitResetPwd() {
+  const val = document.getElementById('reset-pwd-input').value;
+  if (val === 'elemen123') {
+    localStorage.removeItem(LIMIT_KEY);
+    updateUsageDisplay();
+    const btn = document.getElementById('btn-kira');
+    if (btn) btn.disabled = false;
+    document.getElementById('reset-overlay').style.display = 'none';
+    document.getElementById('reset-msg').textContent = '';
+  } else {
+    document.getElementById('reset-msg').textContent = 'Kod salah. Sila cuba lagi.';
+  }
+}
+
+function closeResetOverlay() {
+  document.getElementById('reset-overlay').style.display = 'none';
+}
+
+// ── GLOBAL STATE ──
+let _innerCount = {}, _outerCount = {}, _currentTab = 'inner', _tanahForceTinggi = false, _tanahForceLemah = false, _gValue = null;
+
+function toDigit(n) {
+  n = Math.abs(parseInt(n));
+  while (n > 9) {
+    let s = 0;
+    while (n > 0) { s += n % 10; n = Math.floor(n / 10); }
+    n = s;
+  }
+  return n;
+}
+
+// Inner: 0=Lemah, 1-2=nombor sahaja, 3+=Tinggi
+// TANAH inner: 0=Lemah, 1=nombor sahaja, 2+=Tinggi
+function getInnerTahap(n, nama) {
+  if (nama === 'TANAH' && _tanahForceTinggi) return 'TINGGI';
+  if (nama === 'TANAH' && _tanahForceLemah) return 'TIADA';
+  if (n === 0) return 'TIADA';
+  const threshold = (nama === 'TANAH') ? 2 : 3;
+  if (n >= threshold) return 'TINGGI';
+  return null;
+}
+
+// Outer: 0=tiada ulangan (papar "-"), nombor sahaja jika ada, Tinggi jika threshold
+// TANAH: 2+= Tinggi, lain: 3+= Tinggi
+function getOuterTahap(n, nama) {
+  if (n === 0) return 'DASH';   // tiada nombor berulang → papar "-"
+  const threshold = (nama === 'TANAH') ? 2 : 3;
+  if (n >= threshold) return 'TINGGI';
+  return null; // papar nombor sahaja
+}
+
+// ── MAIN CALC ──
+async function kiraPrisma() {
+  const errEl = document.getElementById('error-msg');
+  errEl.classList.remove('show');
+
+  let hari = parseInt(document.getElementById('inp-hari').value);
+  const bulan = parseInt(document.getElementById('inp-bulan').value);
+  const tahun = parseInt(document.getElementById('inp-tahun').value);
+  const subuh = document.getElementById('cbx-subuh').checked;
+
+  if (!hari || !bulan || !tahun || hari<1 || hari>31 || bulan<1 || bulan>12 || tahun<1900 || tahun>2025) {
+    errEl.classList.add('show');
+    return;
+  }
+
+  if (subuh) hari = hari - 1;
+  if (hari < 1) hari = 1;
+
+  const kurun = Math.floor(tahun / 100);
+  const tahun2 = tahun % 100;
+
+  const A = toDigit(hari);
+  const B = toDigit(bulan);
+  const C = toDigit(kurun);
+  const D = toDigit(tahun2 === 0 ? 9 : tahun2);
+
+  // Inner zone
+  const E = toDigit(A + B);
+  const F = toDigit(C + D);
+  const G = toDigit(E + F);
+  _gValue = G;
+  const H = toDigit(B + C);
+  const I = toDigit(G + H);
+
+  // Outer zone: i=A+E, ii=B+E, iii=C+F, iv=D+F, v=F+G, vi=E+G
+  const oi  = toDigit(A + E);
+  const oii = toDigit(B + E);
+  const oiii= toDigit(C + F);
+  const oiv = toDigit(D + F);
+  const ov  = toDigit(F + G);
+  const ovi = toDigit(E + G);
+
+  // Update SVG prism — inner + outer nodes
+  updatePrism({A,B,C,D,E,F,G,H,I}, {oi,oii,oiii,oiv,ov,ovi});
+
+  // Count inner
+  const innerNodes = [A,B,C,D,E,F,G,H,I];
+  const outerNodes = [oi,oii,oiii,oiv,ov,ovi];
+
+  function addCount(nodes, obj) {
+    nodes.forEach(v => {
+      const info = elemenInfo[v];
+      if (info) obj[info.name] = (obj[info.name]||0) + 1;
+    });
+  }
+
+  const innerCount = {BESI:0,AIR:0,API:0,KAYU:0,TANAH:0};
+  addCount(innerNodes, innerCount);
+
+  // ── OUTER LOGIC BARU ──
+  // 1. Kira berapa kali setiap NOMBOR berulang dalam outer nodes
+  const outerNumFreq = {};
+  outerNodes.forEach(v => { outerNumFreq[v] = (outerNumFreq[v]||0) + 1; });
+
+  // 2. Cari elemen yang ada sekurang-kurangnya 1 nombor berulang (>=2 kali)
+  const elemenWithRepeat = new Set();
+  Object.entries(outerNumFreq).forEach(([numStr, freq]) => {
+    if (freq >= 2) {
+      const info = elemenInfo[parseInt(numStr)];
+      if (info) elemenWithRepeat.add(info.name);
+    }
+  });
+
+  // 3. Untuk elemen yang layak (ada ulangan), kira SEMUA nombor outer yg sama elemen
+  const outerCount = {BESI:0,AIR:0,API:0,KAYU:0,TANAH:0};
+  outerNodes.forEach(v => {
+    const info = elemenInfo[v];
+    if (info && elemenWithRepeat.has(info.name)) {
+      outerCount[info.name] = (outerCount[info.name]||0) + 1;
+    }
+  });
+
+  // Elemen yang tiada ulangan kekal 0 → papar "-"
+
+  _innerCount = innerCount;
+  _outerCount = outerCount;
+
+  // Semak sama ada nombor 5 ada di kedudukan G, H, E, A, F atau I → TANAH TINGGI
+  const tanahTinggiPositions = [G, H, E, A, F, I];
+  _tanahForceTinggi = tanahTinggiPositions.includes(5);
+  _tanahForceLemah = !tanahTinggiPositions.includes(5);
+
+  await incrementUsage();
+  updateUsageDisplay();
+
+  // Lock button kalau dah habis
+  // Dominant (by inner)
+  let dominant = 'BESI', maxC = -1;
+  Object.entries(innerCount).forEach(([k,v]) => { if (v > maxC) { maxC = v; dominant = k; } });
+
+  // Update base codes display
+  _currentTab = 'inner';
+  buildQuadrantChart();
+
+  const resultsEl = document.getElementById('results');
+  resultsEl.classList.add('visible');
+  resultsEl.scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+// ── QUADRANT DIAMOND CHART (Besi/Api/Api/Kayu axes, Ok/D/T thresholds + Tanah centre dot + Talent) ──
+const QUADRANT_TALENT = {
+  besi_kayu: 'Pengurusan Maklumat',
+  besi_air:  'Hubungan',
+  api_kayu:  'Teknikal',
+  api_air:   'Idea',
+};
+
+// Kitaran kawalan elemen: Besi→Kayu→Tanah→Air→Api→Besi
+const ELEMENT_CONTROLS = {
+  BESI:  'KAYU',
+  KAYU:  'TANAH',
+  TANAH: 'AIR',
+  AIR:   'API',
+  API:   'BESI',
+};
+
+function buildQuadrantChart() {
+  const wrap = document.getElementById('quadrant-svg-wrap');
+  const bakatEl = document.getElementById('bakat-result');
+  const industriEl = document.getElementById('industri-result');
+  if (!wrap) return;
+
+  // Nilai paksi = max(inner, outer) bagi setiap elemen
+  const besiVal = Math.max(_innerCount['BESI']||0, _outerCount['BESI']||0);
+  const apiVal  = Math.max(_innerCount['API']||0,  _outerCount['API']||0);
+  const airVal  = Math.max(_innerCount['AIR']||0,  _outerCount['AIR']||0);
+  const kayuVal = Math.max(_innerCount['KAYU']||0, _outerCount['KAYU']||0);
+  const tanahVal= Math.max(_innerCount['TANAH']||0,_outerCount['TANAH']||0);
+
+  // Threshold tetap 3 zon: 1=Ok, 2=D, 3+=T (radius diamond dibahagi 3 zon sama)
+  function zonOf(v){
+    if(v >= 3) return 3; // T
+    if(v === 2) return 2; // D
+    if(v === 1) return 1; // Ok
+    return 0;
+  }
+  const besiZon = zonOf(besiVal), apiZon = zonOf(apiVal), airZon = zonOf(airVal), kayuZon = zonOf(kayuVal);
+
+  // Saiz titik tengah (TANAH): 0=Tiada, 1=Sederhana, 2+=Besar
+  let tanahR, tanahLabel;
+  if (tanahVal <= 0) { tanahR = 5;  tanahLabel = 'Tiada'; }
+  else if (tanahVal === 1) { tanahR = 11; tanahLabel = 'Sederhana'; }
+  else { tanahR = 17; tanahLabel = 'Besar'; }
+
+  // Geometri SVG — bentuk diamond (4 garis pepenjuru dari tengah ke 4 hujung paksi)
+  const armLen = 120; // jarak penuh tengah → hujung paksi (zon T)
+  const zonStep = armLen / 3; // setiap zon (Ok/D/T) sama saiz
+  const sideMargin = 86, topMargin = 80, bottomMargin = 100;
+  const W = (armLen + sideMargin) * 2;
+  const cx = W/2;
+  const cy = topMargin + armLen;
+  const totalH = cy + armLen + bottomMargin;
+
+  const colors = { besi:'#7c5cd6', air:'#2b78c4', api:'#c4432e', kayu:'#2f9152', tanah:'#b9941f' };
+
+  // Kedudukan hujung setiap paksi ikut zon (0..3 step)
+  const besiPt = { x: cx, y: cy - besiZon*zonStep };
+  const apiPt  = { x: cx, y: cy + apiZon*zonStep };
+  const airPt  = { x: cx + airZon*zonStep, y: cy };
+  const kayuPt = { x: cx - kayuZon*zonStep, y: cy };
+
+  // poligon kite menyambung 4 titik (besi -> air -> api -> kayu -> tutup)
+  const kitePoints = `${besiPt.x},${besiPt.y} ${airPt.x},${airPt.y} ${apiPt.x},${apiPt.y} ${kayuPt.x},${kayuPt.y}`;
+
+  // garis rangka diamond terluar (zon T penuh) - panduan visual statik
+  const outerKite = `${cx},${cy-armLen} ${cx+armLen},${cy} ${cx},${cy+armLen} ${cx-armLen},${cy}`;
+  const midKite = `${cx},${cy-zonStep*2} ${cx+zonStep*2},${cy} ${cx},${cy+zonStep*2} ${cx-zonStep*2},${cy}`;
+  const innerKite = `${cx},${cy-zonStep} ${cx+zonStep},${cy} ${cx},${cy+zonStep} ${cx-zonStep},${cy}`;
+
+  // ── KIRA TALENT: markah quadrant = sum dua paksi yg membentuknya ──
+  const quadrantScores = [
+    { key:'besi_kayu', score: besiVal + kayuVal, label: QUADRANT_TALENT.besi_kayu },
+    { key:'besi_air',  score: besiVal + airVal,  label: QUADRANT_TALENT.besi_air },
+    { key:'api_kayu',  score: apiVal + kayuVal,  label: QUADRANT_TALENT.api_kayu },
+    { key:'api_air',   score: apiVal + airVal,   label: QUADRANT_TALENT.api_air },
+  ].sort((a,b) => b.score - a.score);
+
+  const topTwo = quadrantScores.slice(0,2);
+
+  // ── KIRA INDUSTRI: utama = elemen pada G, kedua = elemen yg dikawal oleh elemen G ──
+  const gInfo = elemenInfo[_gValue];
+  const industriUtama = gInfo ? gInfo.name : null;
+  const industriKedua = industriUtama ? ELEMENT_CONTROLS[industriUtama] : null;
+
+  if (bakatEl) {
+    bakatEl.innerHTML = topTwo.map((q,i) => `
+      <div class="talent-item">
+        <div class="talent-rank">${i===0 ? 'Bakat Utama' : 'Bakat Sokongan'}</div>
+        <div class="talent-name">"${q.label}"</div>
+      </div>`).join('');
+  }
+
+  if (industriEl && industriUtama && industriKedua) {
+    industriEl.innerHTML = `
+      <div class="talent-item">
+        <div class="talent-rank">Industri Utama</div>
+        <div class="talent-name">${industriUtama}</div>
+      </div>
+      <div class="talent-item">
+        <div class="talent-rank">Industri Kedua</div>
+        <div class="talent-name">${industriKedua}</div>
+      </div>`;
+  }
+
+  const svg = `
+  <svg width="${W}" height="${totalH}" viewBox="0 0 ${W} ${totalH}" xmlns="http://www.w3.org/2000/svg">
+    <!-- rangka diamond statik (panduan zon Ok/D/T) -->
+    <polygon points="${outerKite}" fill="none" stroke="var(--border)" stroke-width="1" stroke-dasharray="3 3"/>
+    <polygon points="${midKite}" fill="none" stroke="var(--border)" stroke-width="1" stroke-dasharray="3 3"/>
+    <polygon points="${innerKite}" fill="none" stroke="var(--border)" stroke-width="1" stroke-dasharray="3 3"/>
+
+    <!-- axes (garis pepenjuru) -->
+    <line x1="${cx}" y1="${cy-armLen-18}" x2="${cx}" y2="${cy+armLen+18}" stroke="${colors.besi}" stroke-opacity="0.35" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <line x1="${cx-armLen-18}" y1="${cy}" x2="${cx+armLen+18}" y2="${cy}" stroke="${colors.air}" stroke-opacity="0.35" stroke-width="1.5" stroke-dasharray="4 4"/>
+
+    <!-- arrow heads -->
+    <polygon points="${cx},${cy-armLen-26} ${cx-6},${cy-armLen-14} ${cx+6},${cy-armLen-14}" fill="${colors.besi}" opacity="0.7"/>
+    <polygon points="${cx},${cy+armLen+26} ${cx-6},${cy+armLen+14} ${cx+6},${cy+armLen+14}" fill="${colors.api}" opacity="0.7"/>
+    <polygon points="${cx+armLen+26},${cy} ${cx+armLen+14},${cy-6} ${cx+armLen+14},${cy+6}" fill="${colors.air}" opacity="0.7"/>
+    <polygon points="${cx-armLen-26},${cy} ${cx-armLen-14},${cy-6} ${cx-armLen-14},${cy+6}" fill="${colors.kayu}" opacity="0.7"/>
+
+    <!-- axis labels -->
+    <text x="${cx}" y="${cy-armLen-32}" text-anchor="middle" font-family="Cinzel, serif" font-size="13" font-weight="700" fill="${colors.besi}">BESI</text>
+    <text x="${cx}" y="${cy-armLen-18}" text-anchor="middle" font-family="'Crimson Pro', serif" font-size="10" fill="var(--text-dim)">(Berfikir)</text>
+
+    <text x="${cx}" y="${cy+armLen+40}" text-anchor="middle" font-family="Cinzel, serif" font-size="13" font-weight="700" fill="${colors.api}">API</text>
+    <text x="${cx}" y="${cy+armLen+54}" text-anchor="middle" font-family="'Crimson Pro', serif" font-size="10" fill="var(--text-dim)">(Perasaan)</text>
+
+    <text x="${cx+armLen+sideMargin-22}" y="${cy-6}" text-anchor="middle" font-family="Cinzel, serif" font-size="13" font-weight="700" fill="${colors.air}">AIR</text>
+    <text x="${cx+armLen+sideMargin-22}" y="${cy+10}" text-anchor="middle" font-family="'Crimson Pro', serif" font-size="10" fill="var(--text-dim)">(Ekstrovert)</text>
+
+    <text x="${cx-armLen-sideMargin+22}" y="${cy-6}" text-anchor="middle" font-family="Cinzel, serif" font-size="13" font-weight="700" fill="${colors.kayu}">KAYU</text>
+    <text x="${cx-armLen-sideMargin+22}" y="${cy+10}" text-anchor="middle" font-family="'Crimson Pro', serif" font-size="10" fill="var(--text-dim)">(Introvert)</text>
+
+    <!-- zon tick labels (Ok/D/T) pada paksi BESI sahaja, sbg rujukan skala -->
+    <text x="${cx+6}" y="${cy-zonStep+4}" font-family="'Crimson Pro', serif" font-size="10" fill="var(--text-dim)">Ok</text>
+    <text x="${cx+6}" y="${cy-zonStep*2+4}" font-family="'Crimson Pro', serif" font-size="10" fill="var(--text-dim)">D</text>
+    <text x="${cx+6}" y="${cy-zonStep*3+4}" font-family="'Crimson Pro', serif" font-size="10" fill="var(--text-dim)">T</text>
+
+    <!-- quadrant labels -->
+    <text x="${cx-armLen*0.62}" y="${cy-armLen*0.78}" text-anchor="middle" font-family="Cinzel, serif" font-size="11" font-style="italic" fill="var(--text-dim)" transform="rotate(-32 ${cx-armLen*0.62} ${cy-armLen*0.78})">"Pengurusan Maklumat"</text>
+    <text x="${cx+armLen*0.62}" y="${cy-armLen*0.78}" text-anchor="middle" font-family="Cinzel, serif" font-size="11" font-style="italic" fill="var(--text-dim)" transform="rotate(32 ${cx+armLen*0.62} ${cy-armLen*0.78})">"Hubungan"</text>
+    <text x="${cx-armLen*0.62}" y="${cy+armLen*0.78}" text-anchor="middle" font-family="Cinzel, serif" font-size="11" font-style="italic" fill="var(--text-dim)" transform="rotate(32 ${cx-armLen*0.62} ${cy+armLen*0.78})">"Teknikal"</text>
+    <text x="${cx+armLen*0.62}" y="${cy+armLen*0.78}" text-anchor="middle" font-family="Cinzel, serif" font-size="11" font-style="italic" fill="var(--text-dim)" transform="rotate(-32 ${cx+armLen*0.62} ${cy+armLen*0.78})">"Idea"</text>
+
+    <!-- plotted kite (poligon hasil sebenar) -->
+    <polygon points="${kitePoints}" fill="var(--gold2)" fill-opacity="0.16" stroke="var(--gold2)" stroke-width="1.5"/>
+    <circle cx="${besiPt.x}" cy="${besiPt.y}" r="4" fill="${colors.besi}"/>
+    <circle cx="${airPt.x}" cy="${airPt.y}" r="4" fill="${colors.air}"/>
+    <circle cx="${apiPt.x}" cy="${apiPt.y}" r="4" fill="${colors.api}"/>
+    <circle cx="${kayuPt.x}" cy="${kayuPt.y}" r="4" fill="${colors.kayu}"/>
+
+    <!-- centre TANAH dot (size = tahap) -->
+    <circle cx="${cx}" cy="${cy}" r="${tanahR}" fill="${colors.tanah}" fill-opacity="0.25" stroke="${colors.tanah}" stroke-width="1.5"/>
+
+    <!-- legend / tanah readout -->
+    <text x="${cx-2}" y="${totalH-14}" text-anchor="end" font-family="Cinzel, serif" font-size="11" letter-spacing="0.08em" fill="var(--text-dim)">TANAH:</text>
+    <text x="${cx+4}" y="${totalH-14}" text-anchor="start" font-family="Cinzel, serif" font-size="11" letter-spacing="0.08em" font-weight="700" fill="${colors.tanah}">${tanahLabel}</text>
+  </svg>`;
+
+  wrap.innerHTML = svg;
+}
+
+// ── UPDATE PRISM SVG ──
+function updatePrism(inner, outer) {
+  const cMap = {besi:'#7c5cd6',air:'#2b78c4',api:'#c4432e',kayu:'#2f9152',tanah:'#b9941f'};
+  const idMap = {A:'v-A',B:'v-B',C:'v-C',D:'v-D',E:'v-E',F:'v-F',G:'v-G',H:'v-H',I:'v-I'};
+  Object.entries(inner).forEach(([k,v]) => {
+    const el = document.getElementById(idMap[k]);
+    if (!el) return;
+    el.textContent = v;
+    const info = elemenInfo[v];
+    el.style.fill = info ? cMap[info.color] : '';
+  });
+  // Outer nodes
+  const outerIdMap = {oi:'v-oi',oii:'v-oii',oiii:'v-oiii',oiv:'v-oiv',ov:'v-ov',ovi:'v-ovi'};
+  Object.entries(outer).forEach(([k,v]) => {
+    const el = document.getElementById(outerIdMap[k]);
+    if (!el) return;
+    el.textContent = v;
+    const info = elemenInfo[v];
+    el.style.fill = info ? cMap[info.color] : '#8a6d2f';
+  });
+}
+
+// ── RESET ──
+function resetForm() {
+  document.getElementById('inp-hari').value = '';
+  document.getElementById('inp-bulan').value = '';
+  document.getElementById('inp-tahun').value = '';
+  document.getElementById('inp-masa').value = '';
+  document.getElementById('cbx-subuh').checked = false;
+  document.getElementById('results').classList.remove('visible');
+  document.getElementById('quadrant-svg-wrap').innerHTML = '';
+  document.getElementById('bakat-result').innerHTML = '';
+  document.getElementById('industri-result').innerHTML = '';
+  const allIds = ['v-A','v-B','v-C','v-D','v-E','v-F','v-G','v-H','v-I','v-oi','v-oii','v-oiii','v-oiv','v-ov','v-ovi'];
+  allIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.textContent = '—'; el.style.fill = ''; }
+  });
+  _currentTab = 'inner';
+  window.scrollTo({ top: document.getElementById('kira').offsetTop - 40, behavior:'smooth' });
+}
+
+// Init
+initBookCode();
+
+</script>
+</body>
+</html>
